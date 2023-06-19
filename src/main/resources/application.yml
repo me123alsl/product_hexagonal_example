@@ -1,1 +1,33 @@
+server:
+  error:
+    include-exception: false      # Response 에 Exception 을 표시할지
+    include-message: always       # Response 에 Exception Message 를 표시할지 (never | always | on_param)
+    include-stacktrace: never  # Response 에 Stack Trace 를 표시할지 (never | always | on_param) on_trace_params 은 deprecated
+    whitelabel.enabled: true      # 에러 발생 시 Spring 기본 에러 페이지 노출 여부
 
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
+  #h2
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:product
+    username: sa
+    password:
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        ddl-auto: create
+    show-sql: true
+    generate-ddl: true
