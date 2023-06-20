@@ -5,14 +5,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import sam.song.product.adapter.in.request.SearchProductOption;
+import sam.song.product.adapter.in.request.SearchProductOptionRequest;
 
 @RequiredArgsConstructor
 public class ProductCustomRepositoryImpl implements ProductCustomRepository
 {
   private final JPAQueryFactory queryFactory;
   @Override
-  public List<ProductJpaEntity> findAllSearchOption(SearchProductOption option, Pageable pageable) {
+  public List<ProductJpaEntity> findAllSearchOption(SearchProductOptionRequest option, Pageable pageable) {
     return queryFactory.
         selectFrom(QProductJpaEntity.productJpaEntity).
         where(

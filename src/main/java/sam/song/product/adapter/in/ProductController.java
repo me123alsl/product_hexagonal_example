@@ -1,7 +1,5 @@
 package sam.song.product.adapter.in;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sam.song.product.adapter.in.request.CreateProductRequest;
-import sam.song.product.adapter.in.request.SearchProductOption;
+import sam.song.product.adapter.in.request.SearchProductOptionRequest;
 import sam.song.product.adapter.in.request.UpdateProductRequest;
 import sam.song.product.application.port.in.CreateProductUseCase;
 import sam.song.product.application.port.in.FindProductUseCase;
@@ -84,7 +82,7 @@ public class ProductController {
    */
   @PostMapping("/search")
   public CommonResponse<?> searchProduct(
-      @RequestBody SearchProductOption searchProductOption, Pageable pageable) {
+      @RequestBody SearchProductOptionRequest searchProductOption, Pageable pageable) {
     return findProductUseCase.findByOption(searchProductOption, pageable);
   }
 }

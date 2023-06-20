@@ -5,7 +5,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import sam.song.product.adapter.in.request.SearchProductOption;
+import sam.song.product.adapter.in.request.SearchProductOptionRequest;
 import sam.song.product.application.port.out.LoadProductPort;
 import sam.song.product.application.port.out.SaveProductPort;
 import sam.song.product.application.port.out.UpdateProductPort;
@@ -43,7 +43,7 @@ public class ProductRepositoryAdapter implements LoadProductPort, SaveProductPor
   }
 
   @Override
-  public List<ProductJpaEntity> loadByOption(SearchProductOption option, Pageable pageable) {
+  public List<ProductJpaEntity> loadByOption(SearchProductOptionRequest option, Pageable pageable) {
     return productJpaRepository.findAllSearchOption(option, pageable);
   }
 

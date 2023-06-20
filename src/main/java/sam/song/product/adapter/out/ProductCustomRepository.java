@@ -2,11 +2,10 @@ package sam.song.product.adapter.out;
 
 import java.util.List;
 import org.springframework.data.domain.Pageable;
-import sam.song.product.adapter.in.request.SearchProductOption;
-import sam.song.product.adapter.out.ProductJpaEntity;
+import sam.song.product.adapter.in.request.SearchProductOptionRequest;
 
 public interface ProductCustomRepository {
 
-  List<ProductJpaEntity> findAllSearchOption(SearchProductOption option, Pageable pageable);
+  List<ProductJpaEntity> findAllSearchOption(SearchProductOptionRequest option, Pageable pageable);
 
 }

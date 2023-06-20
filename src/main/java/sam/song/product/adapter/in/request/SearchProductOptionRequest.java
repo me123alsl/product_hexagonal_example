@@ -3,7 +3,7 @@ package sam.song.product.adapter.in.request;
 import lombok.Getter;
 
 @Getter
-public class SearchProductOption {
+public class SearchProductOptionRequest {
 
   String name;
   Integer minPrice;

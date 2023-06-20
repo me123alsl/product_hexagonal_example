@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sam.song.product.adapter.in.request.CreateProductRequest;
-import sam.song.product.adapter.in.request.SearchProductOption;
+import sam.song.product.adapter.in.request.SearchProductOptionRequest;
 import sam.song.product.adapter.in.request.UpdateProductRequest;
 import sam.song.product.adapter.out.ProductJpaEntity;
 import sam.song.product.application.port.in.CreateProductUseCase;
@@ -68,7 +68,7 @@ public class ProductService
   }
 
   @Override
-  public CommonResponse<List<Product>> findByOption(SearchProductOption option, Pageable pageable) {
+  public CommonResponse<List<Product>> findByOption(SearchProductOptionRequest option, Pageable pageable) {
     List<Product> products = Product.from(loadProductPort.loadByOption(option, pageable));
     if (products.isEmpty()) {
       throw new NotFoundProductException("Product not found");
