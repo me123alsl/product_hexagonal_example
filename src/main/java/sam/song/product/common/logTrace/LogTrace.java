@@ -6,4 +6,6 @@ public interface LogTrace {
   void end(TraceStatus status);
   void exception(TraceStatus status, Exception e);
 
+  void printMessage(String message);
+
 }

@@ -4,12 +4,14 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import sam.song.product.adapter.in.request.CreateProductRequest;
 import sam.song.product.adapter.out.ProductJpaEntity;
 
 @Getter
 @Builder
 @AllArgsConstructor
+@ToString
 public class Product {
 
   private long id;

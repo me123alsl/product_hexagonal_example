@@ -31,3 +31,8 @@ spring:
         ddl-auto: create
     show-sql: true
     generate-ddl: true
+
+
+logging:
+  level:
+    sam.song.product.common.logTrace: DEBUG
