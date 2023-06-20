@@ -3,6 +3,7 @@ package sam.song.product.adapter.in;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import sam.song.product.adapter.in.request.CreateProductRequest;
 import sam.song.product.adapter.in.request.SearchProductOptionRequest;
@@ -45,6 +47,7 @@ public class ProductController {
    * @return 생성된 상품정보
    */
   @PostMapping("")
+  @ResponseStatus(HttpStatus.CREATED)
   public CommonResponse<?> createProduct(
       @Validated @RequestBody CreateProductRequest createProductDto) {
     return createProductUseCase.create(createProductDto);
@@ -57,6 +60,7 @@ public class ProductController {
    * @return 수정된 상품정보
    */
   @PutMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
   public CommonResponse updateProduct(
       @PathVariable Long id,
       @Validated @RequestBody UpdateProductRequest updateProductDto) {
@@ -70,6 +74,7 @@ public class ProductController {
    * @return 조회된 상품
    */
   @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
   public CommonResponse<?> findProductById(
       @PathVariable Long id) {
     return findProductUseCase.find(id);
@@ -81,6 +86,7 @@ public class ProductController {
    * @return 조회된 상품 리스트
    */
   @PostMapping("/search")
+  @ResponseStatus(HttpStatus.OK)
   public CommonResponse<?> searchProduct(
       @RequestBody SearchProductOptionRequest searchProductOption, Pageable pageable) {
     return findProductUseCase.findByOption(searchProductOption, pageable);

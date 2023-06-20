@@ -1,10 +1,14 @@
 package sam.song.product.common.logTrace;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 @Getter
+@RequiredArgsConstructor
+@Component
 public class ThreadLocalLogTrace implements LogTrace{
   private static final String START_PREFIX = "-->";
   private static final String COMPLETE_PREFIX = "<--";

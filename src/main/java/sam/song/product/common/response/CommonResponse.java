@@ -21,4 +21,11 @@ public class CommonResponse<T> {
   private String message;
   private T data;
 
+  public static <T> CommonResponse<T> success(int status, String message, T data) {
+    return CommonResponse.<T>builder()
+        .status(status)
+        .message(message)
+        .data(data)
+        .build();
+  }
 }

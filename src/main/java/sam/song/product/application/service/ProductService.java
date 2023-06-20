@@ -32,11 +32,7 @@ public class ProductService
   public CommonResponse create(CreateProductRequest request) {
     ProductJpaEntity productJpaEntity = saveProductPort.saveProduct(Product.from(request));
     Product saveProduct = Product.from(productJpaEntity);
-    return CommonResponse.builder()
-        .status(200)
-        .data(saveProduct)
-        .message("Product created successfully")
-        .build();
+    return CommonResponse.success(201, "Product created successfully", saveProduct);
   }
 
   @Override
@@ -46,11 +42,7 @@ public class ProductService
             () -> new NotFoundProductException("Product not found")
         );
     Product product = Product.from(findProductEntity);
-    return CommonResponse.<Product>builder()
-        .status(200)
-        .data(product)
-        .message("Product found successfully")
-        .build();
+    return CommonResponse.success(200, "Product found successfully", product);
   }
 
   @Override
@@ -60,11 +52,7 @@ public class ProductService
     if (products.isEmpty()) {
       throw new NotFoundProductException("Product not found");
     }
-    return CommonResponse.<List<Product>>builder()
-        .status(200)
-        .data(products)
-        .message("Product found successfully")
-        .build();
+    return CommonResponse.success(200, "Product found successfully", products);
   }
 
   @Override
@@ -73,11 +61,7 @@ public class ProductService
     if (products.isEmpty()) {
       throw new NotFoundProductException("Product not found");
     }
-    return CommonResponse.<List<Product>>builder()
-        .status(200)
-        .data(products)
-        .message("Product found successfully")
-        .build();
+    return CommonResponse.success(200, "Product found successfully", products);
   }
 
   @Override
@@ -97,10 +81,6 @@ public class ProductService
         .build();
 
     Product updatedProduct = Product.from(updateProductPort.updateProduct(product));
-    return CommonResponse.builder()
-        .status(200)
-        .data(updatedProduct)
-        .message("Product updated successfully")
-        .build();
+    return CommonResponse.success(200, "Product updated successfully", updatedProduct);
   }
 }
