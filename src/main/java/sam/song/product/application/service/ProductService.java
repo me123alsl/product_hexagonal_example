@@ -2,9 +2,10 @@ package sam.song.product.application.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sam.song.product.adapter.in.request.CreateProductRequest;
+import sam.song.product.adapter.in.request.SearchProductOption;
 import sam.song.product.adapter.in.request.UpdateProductRequest;
 import sam.song.product.adapter.out.ProductJpaEntity;
 import sam.song.product.application.port.in.CreateProductUseCase;
@@ -56,6 +57,19 @@ public class ProductService
   public CommonResponse<List<Product>> findAll() {
     List<ProductJpaEntity> productJpaEntities = loadProductPort.loadAll();
     List<Product> products = Product.from(productJpaEntities);
+    if (products.isEmpty()) {
+      throw new NotFoundProductException("Product not found");
+    }
+    return CommonResponse.<List<Product>>builder()
+        .status(200)
+        .data(products)
+        .message("Product found successfully")
+        .build();
+  }
+
+  @Override
+  public CommonResponse<List<Product>> findByOption(SearchProductOption option, Pageable pageable) {
+    List<Product> products = Product.from(loadProductPort.loadByOption(option, pageable));
     if (products.isEmpty()) {
       throw new NotFoundProductException("Product not found");
     }

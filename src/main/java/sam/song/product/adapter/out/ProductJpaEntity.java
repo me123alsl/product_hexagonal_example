@@ -22,7 +22,7 @@ public class ProductJpaEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+  private Long id;
 
   @Column(name = "product_name")
   private String name;
