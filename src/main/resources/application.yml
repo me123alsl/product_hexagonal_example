@@ -41,6 +41,17 @@ spring:
       mode: always
       data-locations: classpath:db/data.sql
 
+
 logging:
   level:
     sam.song.product.common.logTrace: DEBUG
+
+springdoc:
+  packages-to-scan: sam.song.product
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
