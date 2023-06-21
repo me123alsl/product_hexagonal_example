@@ -4,6 +4,9 @@ server:
     include-message: always       # Response 에 Exception Message 를 표시할지 (never | always | on_param)
     include-stacktrace: never  # Response 에 Stack Trace 를 표시할지 (never | always | on_param) on_trace_params 은 deprecated
     whitelabel.enabled: true      # 에러 발생 시 Spring 기본 에러 페이지 노출 여부
+  tomcat:
+    connection-timeout: 5s   # 연결 시도 시간
+#    keep-alive-timeout: 10s  # 요청부터 응답가지 유지하는 시간
 
 spring:
   mvc:
@@ -20,7 +23,7 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:product
+    url: jdbc:h2:mem:product;MODE=MySQL;
     username: sa
     password:
 
@@ -31,7 +34,12 @@ spring:
         ddl-auto: create
     show-sql: true
     generate-ddl: true
+    defer-datasource-initialization: true
 
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:db/data.sql
 
 logging:
   level:

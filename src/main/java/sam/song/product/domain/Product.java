@@ -20,6 +20,16 @@ public class Product {
   private int quantity;
   private String description;
 
+  public void minusQuantity(int quantity) {
+    if (this.quantity - quantity < 0)
+      throw new IllegalArgumentException("not enough quantity. " + this.quantity + " left");
+    this.quantity -= quantity;
+  }
+
+  public void plusQuantity(int quantity) {
+    this.quantity += quantity;
+  }
+
    public static Product from(CreateProductRequest request) {
      return Product.builder()
          .name(request.getName())

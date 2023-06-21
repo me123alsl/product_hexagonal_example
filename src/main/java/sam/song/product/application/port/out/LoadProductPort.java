@@ -10,6 +10,5 @@ public interface LoadProductPort {
 
   Optional<ProductJpaEntity> load(Long id);
   List<ProductJpaEntity> loadAll();
-  boolean existsById(Long id);
   List<ProductJpaEntity> loadByOption(SearchProductOptionRequest option, Pageable pageable);
 }

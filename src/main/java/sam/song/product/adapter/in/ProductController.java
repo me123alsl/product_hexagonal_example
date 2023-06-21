@@ -1,10 +1,12 @@
 package sam.song.product.adapter.in;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import sam.song.product.adapter.in.request.CreateProductRequest;
 import sam.song.product.adapter.in.request.SearchProductOptionRequest;
 import sam.song.product.adapter.in.request.UpdateProductRequest;
 import sam.song.product.application.port.in.CreateProductUseCase;
+import sam.song.product.application.port.in.DeleteProductUseCase;
 import sam.song.product.application.port.in.FindProductUseCase;
 import sam.song.product.application.port.in.UpdateProductUseCase;
 import sam.song.product.common.response.CommonResponse;
@@ -30,14 +33,14 @@ public class ProductController {
   private final CreateProductUseCase createProductUseCase;
   private final FindProductUseCase findProductUseCase;
   private final UpdateProductUseCase updateProductUseCase;
-
+  private final DeleteProductUseCase deleteProductUseCase;
 
   /**
    * 상품 전체 조회
    * @return 상품 전체 리스트
    */
   @GetMapping("")
-  public CommonResponse<?> findProduct() {
+  public CommonResponse<?> findProduct() throws InterruptedException {
     return findProductUseCase.findAll();
   }
 
@@ -49,7 +52,7 @@ public class ProductController {
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)
   public CommonResponse<?> createProduct(
-      @Validated @RequestBody CreateProductRequest createProductDto) {
+      @RequestBody @Valid CreateProductRequest createProductDto) {
     return createProductUseCase.create(createProductDto);
   }
 
@@ -63,7 +66,7 @@ public class ProductController {
   @ResponseStatus(HttpStatus.OK)
   public CommonResponse updateProduct(
       @PathVariable Long id,
-      @Validated @RequestBody UpdateProductRequest updateProductDto) {
+      @RequestBody @Validated UpdateProductRequest updateProductDto) {
     return updateProductUseCase.update(id, updateProductDto);
   }
 
@@ -90,5 +93,20 @@ public class ProductController {
   public CommonResponse<?> searchProduct(
       @RequestBody SearchProductOptionRequest searchProductOption, Pageable pageable) {
     return findProductUseCase.findByOption(searchProductOption, pageable);
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public CommonResponse<?> deleteProduct(
+      @PathVariable Long id) {
+    return deleteProductUseCase.delete(id);
+  }
+
+  @PutMapping("/{id}/sell/count/{quantity}")
+  @ResponseStatus(HttpStatus.OK)
+  public CommonResponse<?> sellProduct(
+      @PathVariable Long id,
+      @PathVariable Integer quantity) {
+    return updateProductUseCase.minusQuantity(id, quantity);
   }
 }

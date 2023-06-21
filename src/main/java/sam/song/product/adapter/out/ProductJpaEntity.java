@@ -6,22 +6,25 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import java.time.Instant;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 import sam.song.product.domain.Product;
 
 @Entity
 @Getter
 @RequiredArgsConstructor
+@DynamicUpdate
 @Table(name = "product")
 public class ProductJpaEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "product_name")
@@ -45,7 +48,8 @@ public class ProductJpaEntity {
   private Instant updatedAt;
 
   @Builder
-  public ProductJpaEntity(String name, int price, int quantity, String description) {
+  public ProductJpaEntity(long id, String name, int price, int quantity, String description) {
+    this.id = id;
     this.name = name;
     this.price = price;
     this.quantity = quantity;
@@ -54,6 +58,7 @@ public class ProductJpaEntity {
 
   public static ProductJpaEntity from(Product product) {
     return ProductJpaEntity.builder()
+        .id(product.getId())
         .name(product.getName())
         .price(product.getPrice())
         .quantity(product.getQuantity())

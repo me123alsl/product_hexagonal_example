@@ -5,6 +5,11 @@ import sam.song.product.common.response.CommonResponse;
 
 public interface CreateProductUseCase {
 
+  /**
+   * Create Product by request
+   * @param request
+   * @return CommonResponse
+   */
   CommonResponse create(CreateProductRequest request);
 
 }

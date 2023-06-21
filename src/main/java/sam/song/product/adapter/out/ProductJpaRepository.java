@@ -16,6 +16,9 @@ public interface ProductJpaRepository
 
   ProductJpaEntity save(ProductJpaEntity productJpaEntity);
 
+  @Override
+  void deleteById(Long id);
+
   List<ProductJpaEntity> findAllSearchOption(SearchProductOptionRequest option, Pageable pageable);
 
 }

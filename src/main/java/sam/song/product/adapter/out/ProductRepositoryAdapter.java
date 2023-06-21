@@ -6,14 +6,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import sam.song.product.adapter.in.request.SearchProductOptionRequest;
+import sam.song.product.adapter.in.request.UpdateProductRequest;
 import sam.song.product.application.port.out.LoadProductPort;
+import sam.song.product.application.port.out.RemoveProductPort;
 import sam.song.product.application.port.out.SaveProductPort;
 import sam.song.product.application.port.out.UpdateProductPort;
 import sam.song.product.domain.Product;
 
 @Repository
 @RequiredArgsConstructor
-public class ProductRepositoryAdapter implements LoadProductPort, SaveProductPort, UpdateProductPort{
+public class ProductRepositoryAdapter implements LoadProductPort, SaveProductPort, UpdateProductPort,
+    RemoveProductPort {
 
   private final ProductJpaRepository productJpaRepository;
 
@@ -28,18 +31,18 @@ public class ProductRepositoryAdapter implements LoadProductPort, SaveProductPor
   }
 
   @Override
-  public boolean existsById(Long id) {
-    return productJpaRepository.existsById(id);
-  }
-
-  @Override
   public ProductJpaEntity saveProduct(Product product) {
     return productJpaRepository.save(ProductJpaEntity.from(product));
   }
 
   @Override
-  public ProductJpaEntity updateProduct(Product product) {
-    return productJpaRepository.save(ProductJpaEntity.from(product));
+  public ProductJpaEntity updateProduct(long id, UpdateProductRequest request) {
+    return productJpaRepository.update(id, request);
+  }
+
+  @Override
+  public ProductJpaEntity updateQuantity(long id, Integer quantity) {
+    return productJpaRepository.updateQuantity(id, quantity);
   }
 
   @Override
@@ -47,4 +50,8 @@ public class ProductRepositoryAdapter implements LoadProductPort, SaveProductPor
     return productJpaRepository.findAllSearchOption(option, pageable);
   }
 
+  @Override
+  public void removeById(long id) {
+    productJpaRepository.deleteById(id);
+  }
 }

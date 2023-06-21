@@ -1,0 +1,10 @@
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_1', 1000, 100, 'Description 1', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_2', 2000, 200, 'Description 2', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_3', 3000, 300, 'Description 3', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_4', 4000, 400, 'Description 4', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_5', 5000, 500, 'Description 5', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_6', 6000, 600, 'Description 6', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_7', 7000, 700, 'Description 7', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_8', 8000, 800, 'Description 8', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_9', 9000, 900, 'Description 9', now(),0);
+insert into product(product_name,price,quantity,description,created_at,version) values('Product_10', 10000, 1000, 'Description 10', now();

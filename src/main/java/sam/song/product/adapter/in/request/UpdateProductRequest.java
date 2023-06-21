@@ -12,16 +12,16 @@ import lombok.ToString;
 @ToString
 public class UpdateProductRequest {
 
-  @Size(min = 1, max = 10)
-  @NotBlank
+  @Size(min = 1, max = 10, message = "invalid name")
+  @NotBlank(message = "invalid name")
   private String name;
 
-  @Min(value = 0)
+  @Min(value = 100, message = "invalid price")
   private Integer price;
 
-  @Min(100)
+  @Min(value = 100, message = "invalid quantity")
   private Integer quantity;
 
-  @Size(min = 1, max = 100)
+  @Size(min = 1, max = 1000, message = "invalid description")
   private String description;
 }

@@ -18,13 +18,13 @@ public class CreateProductRequest {
   @NotBlank(message = "invalid name")
   private String name;
 
-  @Min(value = 0, message = "invalid price")
+  @Min(value = 100, message = "invalid price")
   private int price;
 
-  @Min(value  =100 , message = "invalid quantity")
+  @Min(value = 100, message = "invalid quantity")
   private int quantity;
 
-  @Size(min = 1, max = 100, message = "invalid description")
+  @Size(min = 1, max = 1000, message = "invalid description")
   private String description;
 
 }

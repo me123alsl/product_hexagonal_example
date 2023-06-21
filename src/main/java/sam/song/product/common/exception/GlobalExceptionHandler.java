@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import sam.song.product.common.response.ErrorResponse;
@@ -20,12 +21,32 @@ public class GlobalExceptionHandler {
     ErrorResponse response = ErrorResponse.builder()
         .status(400)
         .errorMessage("invalid request body format:" + e.getMessage())
-        .path(request.getServletPath())
+        .path(ExceptionUtils.getPath(request))
         .exceptionName(e.getClass().getName())
         .build();
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
   }
 
+  @ExceptionHandler(value = NoHandlerFoundException.class)
+  protected ResponseEntity<?> handleException(NoHandlerFoundException e) {
+    ErrorResponse response = ErrorResponse.builder()
+        .status(404)
+        .errorMessage(e.getMessage())
+        .path(e.getHttpMethod() + " " + e.getRequestURL())
+        .exceptionName(e.getClass().getName())
+        .build();
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+  }
+
+  @ExceptionHandler(value = NotFoundProductException.class)
+  protected ResponseEntity<?> handleException(NotFoundProductException e) {
+    ErrorResponse response = ErrorResponse.builder()
+        .status(204)
+        .errorMessage(e.getMessage())
+        .exceptionName(e.getClass().getName())
+        .build();
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+  }
 
   @ExceptionHandler(value = Exception.class)
   protected ResponseEntity<?> handleException(Exception e) {
@@ -36,17 +57,5 @@ public class GlobalExceptionHandler {
         .build();
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
   }
-
-  @ExceptionHandler(value = NoHandlerFoundException.class)
-  protected ResponseEntity<?> handleException(NoHandlerFoundException e) {
-    ErrorResponse response = ErrorResponse.builder()
-        .status(404)
-        .errorMessage(e.getMessage())
-        .path("[" + e.getHttpMethod() + "]" + e.getRequestURL())
-        .exceptionName(e.getClass().getName())
-        .build();
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-  }
-
 
 }
