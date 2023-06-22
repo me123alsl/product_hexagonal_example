@@ -2,7 +2,6 @@ package sam.song.product.application.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.Synchronized;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
