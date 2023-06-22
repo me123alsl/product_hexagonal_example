@@ -21,38 +21,29 @@ public class BindingExceptionHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ResponseEntity<?> handleException(HttpServletRequest request, MethodArgumentNotValidException e) {
     String errorMessage = e.getBindingResult().getFieldErrors().stream().
-        map(fe -> "[" + fe.getField() + "] " + fe.getDefaultMessage()).collect(Collectors.joining(", "));
-    ErrorResponse response = ErrorResponse.builder()
-        .status(400)
-        .errorMessage(errorMessage)
-        .path(ExceptionUtils.getPath(request))
-        .exceptionName(e.getClass().getName())
-        .build();
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        map(fe -> "[" + fe.getField() + "="+ fe.getRejectedValue() + "] " + fe.getDefaultMessage()).collect(Collectors.joining(", "));
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        ErrorResponse.error(400, null, ExceptionUtils.getPath(request), errorMessage, e.getClass().getName())
+    );
   }
 
   @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ResponseEntity<?> handleException(HttpServletRequest request, MethodArgumentTypeMismatchException e) {
-    ErrorResponse response = ErrorResponse.builder()
-        .status(400)
-        .errorMessage(e.getMessage())
-        .path(ExceptionUtils.getPath(request))
-        .exceptionName(e.getClass().getName())
-        .build();
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        ErrorResponse.error(400, null, ExceptionUtils.getPath(request), e.getMessage(), e.getClass().getName())
+    );
   }
 
   @ExceptionHandler(value = BindException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   protected ResponseEntity<?> handleException(HttpServletRequest request, BindException e) {
-    ErrorResponse response =  ErrorResponse.builder()
-        .status(400)
-        .errorMessage(e.getMessage())
-        .path(ExceptionUtils.getPath(request))
-        .exceptionName(e.getClass().getName())
-        .build();
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+        ErrorResponse.error(400, null, ExceptionUtils.getPath(request), e.getMessage(), e.getClass().getName())
+    );
   }
 
 
